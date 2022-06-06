@@ -1,5 +1,6 @@
 const Character = require('../models/Character.model')
 const openConnection = require('../db/')
+const mongoose = require('mongoose')
 
 const characters = [
   {
@@ -24,13 +25,17 @@ const characters = [
 
 async function seedDatabase () {
   try {
-    await openConnection()
+    const db = await openConnection()
+    console.log(`Succesfully connected to ${db.connection.name} database.`);
     const createdCharacters = await Character.create(characters)
     console.log(`Created ${createdCharacters.length} characters 🥸`)
+    await mongoose.disconnect()
+    console.log(`Succesfully disconnected from ${db.connection.name}`);
   } catch (error) {
     console.error(`Something went wrong while creating the seed: ${error.message}`)
   }
-
 }
+
+seedDatabase()
 
 

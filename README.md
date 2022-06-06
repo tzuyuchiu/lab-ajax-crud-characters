@@ -25,9 +25,9 @@ $ git push origin master
 
 - Create Pull Request so your TAs can check up your work.
 
-## Instructions
+## Iteration 1.1 The API
 
-We will first create a fake API using **JSON-Server** to then do an application to Create, Read, Update, and Delete characters from it. The routes available in this API are the following:
+We will first create an **API** to then do an application to Create, Read, Update, and Delete characters from it. You will need to handle all the routing in `server/routes/characters.route.js` complete the routes using the following:
 
 - **Verb:** GET, **Route:** "/characters"
   - It receives NO parameters
@@ -57,45 +57,32 @@ We will first create a fake API using **JSON-Server** to then do an application 
   - It returns "Character not found" if there is no character with the indicated id
   - It returns text
 
-### Iteration 1: The Fake API
+### Iteration 1.2: The Seeding
 
 ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_99257e2c4240770e6b4bdd406d943ac8.png)
 
-In the `api` folder, create a `db.json` file. Inside our `db.json` we will specify the first 2 characters of our API, so we can start working with some data. Copy/paste the following characters in the file:
-
+In the `server` folder, checkout the seeds folder, let's decompose what it does:
 ```javascript
-{
-  "characters": [
-    {
-      "id": 1,
-      "name": "Han Solo",
-      "occupation": "Smuggler",
-      "weapon": "Blaster Pistol",
-      "cartoon": true
-    },
-    {
-      "id": 2,
-      "name": "Luke Skywalker",
-      "occupation": "Jedi Knight",
-      "weapon": "Lightsaber",
-      "cartoon": false
-    },
-    {
-      "id": 3,
-      "name": "Sponge Bob",
-      "occupation": "Lives under the sea",
-      "weapon": "Crabby Patty",
-      "cartoon": true
-    }
-  ]
-}
+const Character = require('../models/Character.model')
+const openConnection = require('../db/')
+const mongoose = require('mongoose')
 ```
+- Getting the Character model.
+- Getting the function which allow us to connect to the database
+- Requiring mongoose
 
-Then run the following code in the terminal to make our API start working:
+Then, the `seedDatabase` function is:
+- waiting for the database connection
+- Waiting for the creation of our data in the database
+- Disconnecting from the database.
+
+Run the seed with node to create the data in your local database 😉
 
 ```bash
-$ json-server --watch db.json --port 8000
+node path-to-your/seed-file.js
 ```
+
+
 
 ### Iteration 2: The `APIHandler.js` file
 
@@ -103,11 +90,11 @@ We have our API running, so now we will construct a class `APIHandler` to deal w
 
 The functionalities of the `APIHandler` class are:
 
-- Get all the characters info from _[http://localhost:8000/characters](http://localhost:8000/characters)_
-- Get a single character info from _[http://localhost:8000/characters/:id](http://localhost:8000/characters/:id)_
-- Create a single character posting the data to _[http://localhost:8000/characters](http://localhost:8000/characters)_
-- Delete a single character through his id in _[http://localhost:8000/characters/:id](http://localhost:8000/characters/:id)_
-- Edit a single character through his id in _[http://localhost:8000/characters/:id](http://ih-crud-api.herokuapp.com/characters/:id)_
+- Get all the characters info from _[http://localhost:5000/characters](http://localhost:5000/characters)_
+- Get a single character info from _[http://localhost:5000/characters/:name](http://localhost:5000/characters/:name)_
+- Create a single character posting the data to _[http://localhost:5000/characters](http://localhost:5000/characters)_
+- Delete a single character through his id in _[http://localhost:5000/characters/:id](http://localhost:5000/characters/:id)_
+- Edit a single character through his id in _[http://localhost:5000/characters/:id](http://localhost:5000/characters/:id)_
 
 You have to create an Axios call for each of these actions. You can create as many functions as you need inside the class, but remember this class should only manage the API request and display the resulting value.
 
@@ -121,9 +108,16 @@ To make sure everything is working, use [POSTMAN](https://www.getpostman.com/).
 
 In this iteration, it's enough to show results in the console.
 
-### Iteration 3: The `index.js` file
+### Iteration 3: Getting data from the front-end
 
 Once we have the results served by the API in the application, we will create the events that will handle with the CRUD operations.
+To handle the requests, you can either use the native [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) or [axios](https://axios-http.com/docs/intro)
+If you want to use axios, remember that it will be used by the front-end, so you can't access it through node_modules, you will need to get it from a cdn by adding a script through your HTML page like thise one :
+```html
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+```
+
+We will now work in the `public/javascript/index.js`
 
 #### Fetch all characters
 
@@ -131,9 +125,11 @@ Once we have the results served by the API in the application, we will create th
 
 Retrieve all the available characters in the API and show them in the application. In order to do that, we need to:
 
-- Create a button (_Fetch all_ in the image above) that calls a function in the `APIHandler`.
+- Create a button (_Fetch all_ in the image above) which when clicked, will trigger a function that will handle the request.
 - The function will return a JSON object with all the characters.
 - Get the data and show the characters. Finally, with JavaScript, we will create a structure similar to a card (image above) to show detailed info about each character.
+
+**Use the provided template element to create the cards**
 
 #### Fetch one character
 
@@ -141,9 +137,10 @@ Retrieve all the available characters in the API and show them in the applicatio
 
 Following the same idea as with fetching all, to retrieve a single character's data we need to:
 
-- Create a button (_Fetch one_ in the image above) to, through an input field, get the `id` of an existing character.
-- Search that character in the API with _[http://localhost:8000/characters/:id](http://ih-crud-api.herokuapp.com/characters/:id)_
+- Create a button (_Fetch one_ in the image above) to, through an input field, get an existing character using it's name.
+- Search that character in the API with _[http://localhost:5000/characters/:name](http://localhost:5000/characters/:name)_
 - Get the data and show the character info as a card.
+- Don't forget to show the _id field !
 
 #### Delete one character
 
@@ -151,8 +148,8 @@ Following the same idea as with fetching all, to retrieve a single character's d
 
 To be able to delete a character from the API database, we need to:
 
-- Create a button (_Delete_ one in the image above) to get the `id` of the character we want to delete.
-- Delete that character in the API with _[http://localhost:8000/characters/:id](http://ih-crud-api.herokuapp.com/characters/:id)_
+- Create a button (_Delete_ one in the image above) to delete a character using it's `id`.
+- Delete that character in the API with _[http://localhost:5000/characters/:id](http://localhost:5000/characters/:id)_
    <!-- :::danger -->
   **Remember which HTTP verb you need in the request!!**
    <!-- ::: -->
@@ -167,7 +164,11 @@ We will create a form with 4 inputs: name(text), occupation(text), weapon(text) 
 
 - Create a submit button (_Create_ in the image above) to get all the data from the form.
 - Create an event handler function for managing the form submission. To prevent the default form behaviour (page reload), use the [`event.preventDefault()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) method.
-- Send the data to the `APIHandler` function to save the new character through _[http://localhost:8000/characters](http://ih-crud-api.herokuapp.com/characters)_
+- Send the data to a function to save the new character through _[http://localhost:5000/characters](http://localhost:5000/characters)_
+- Here's how to send data in a request (!It returns a Promise!): 
+```javascript
+axios.post('/your-endpoint', {your: 'data', name: 'blob'})
+```
    <!-- :::danger -->
   **Remember which HTTP verb you need in the request!!**
    <!-- ::: -->
@@ -182,7 +183,7 @@ We will create a form with 4 inputs: name(text), occupation(text), weapon(text) 
 
 - Create a submit button (_Update_ in the image above) to get all the data from the form.
 - Create an event handler function for managing the form submission. To prevent the default form behaviour (page reload), use the [`event.preventDefault()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) method.
-- Send the data to the `APIHandler` function to save the new character through _[http://localhost:8000/characters/:id](http://ih-crud-api.herokuapp.com/characters/:id)_
+- Send the data to a function to save the new character through _[http://localhost:5000/characters/:id](http://localhost:5000/characters/:id)_
    <!-- :::danger -->
   **Remember which HTTP verb you need in the request!!**
    <!-- ::: -->

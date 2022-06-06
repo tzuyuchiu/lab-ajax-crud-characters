@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="./public/stylesheets/style.css">
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="./public/stylesheets/style.css">
+    <script type="module" src="./public/javascript/APIHandler.js"></script>
+    <script type="module" src="./public/javascript/index.js"></script>
   <title>IH Characters</title>
 </head>
 <body>
@@ -13,11 +15,22 @@
     <h1>Ironhack Characters API</h1>
     <div class="characters-container">
       <div class="character-info">
+        <div class="character-id">Character Id</div>
         <div class="name">Character Name</div>
         <div class="occupation">Character Occupation</div>
         <div class="cartoon">Is a Cartoon?</div>
         <div class="weapon">Character Weapon</div>
       </div>
+
+      <template id="template">
+        <div class="character-info">
+          <div class="character-id">Character Id</div>
+          <div class="name">Character Name</div>
+          <div class="occupation">Character Occupation</div>
+          <div class="cartoon">Is a Cartoon?</div>
+          <div class="weapon">Character Weapon</div>
+        </div>
+      </template>
     </div>
     <section class="operations">
       <div class="operation">
@@ -86,7 +99,5 @@
       </form>
     </section>
   </section>
-  <script type="text/javascript" src="./public/javascript/APIHandler.js"></script>
-  <script type="text/javascript" src="./public/javascript/index.js"></script>
 </body>
 </html>

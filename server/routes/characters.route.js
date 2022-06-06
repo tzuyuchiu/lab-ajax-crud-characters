@@ -1,5 +1,5 @@
 const router = require('express').Router()
-
+const Character = require('../models/Character.model')
 /**
  * !All the routes here are prefixed with /api/characters
  */
@@ -7,7 +7,7 @@ const router = require('express').Router()
 /**
  * ? This route should respond with all the characters
  */
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   /**Your code goes here */
 })
 
@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
 /**
  * ? This route should respond with one character
  */
-router.get('/:id', (req, res, next) => {
+router.get('/:name', (req, res, next) => {
   /**Your code goes here */
 })
 

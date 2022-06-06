@@ -1,7 +1,10 @@
-const charactersAPI = new APIHandler('http://localhost:8000');
+  /**
+   * You might want to use this template to display each new characters
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template#examples
+   */
+  const characterTemplate = document.getElementById('template')
 
-window.addEventListener('load', () => {
-  document.getElementById('fetch-all').addEventListener('click', function (event) {
+  document.getElementById('fetch-all').addEventListener('click', async function (event) {
 
   });
 
@@ -20,4 +23,4 @@ window.addEventListener('load', () => {
   document.getElementById('new-character-form').addEventListener('submit', function (event) {
 
   });
-});
+
