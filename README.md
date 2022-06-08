@@ -61,7 +61,7 @@ We will first create an **API** to then do an application to Create, Read, Updat
 
 ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_99257e2c4240770e6b4bdd406d943ac8.png)
 
-In the `server` folder, checkout the seeds folder, let's decompose what it does:
+Checkout the seeds folder, let's decompose what it does:
 ```javascript
 const Character = require('../models/Character.model')
 const openConnection = require('../db/')
@@ -83,36 +83,11 @@ node path-to-your/seed-file.js
 ```
 
 
-
-### Iteration 2: The `APIHandler.js` file
-
-We have our API running, so now we will construct a class `APIHandler` to deal with the Axios calls. The only responsibility of this class is to display the JSON result that comes from the API, or give the needed information to the API via a function argument.
-
-The functionalities of the `APIHandler` class are:
-
-- Get all the characters info from _[http://localhost:5000/characters](http://localhost:5000/characters)_
-- Get a single character info from _[http://localhost:5000/characters/:name](http://localhost:5000/characters/:name)_
-- Create a single character posting the data to _[http://localhost:5000/characters](http://localhost:5000/characters)_
-- Delete a single character through his id in _[http://localhost:5000/characters/:id](http://localhost:5000/characters/:id)_
-- Edit a single character through his id in _[http://localhost:5000/characters/:id](http://localhost:5000/characters/:id)_
-
-You have to create an Axios call for each of these actions. You can create as many functions as you need inside the class, but remember this class should only manage the API request and display the resulting value.
-
-<!-- :::success -->
-
-**Micro-advice**
-
-To make sure everything is working, use [POSTMAN](https://www.getpostman.com/).
-
-<!-- ::: -->
-
-In this iteration, it's enough to show results in the console.
-
-### Iteration 3: Getting data from the front-end
+### Iteration 2: Getting data from the front-end
 
 Once we have the results served by the API in the application, we will create the events that will handle with the CRUD operations.
 To handle the requests, you can either use the native [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) or [axios](https://axios-http.com/docs/intro)
-If you want to use axios, remember that it will be used by the front-end, so you can't access it through node_modules, you will need to get it from a cdn by adding a script through your HTML page like thise one :
+If you want to use axios, remember that it will be used by the front-end, so you can't access it through node_modules, you will need to get it from a cdn by adding a script through your HTML page like this one :
 ```html
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 ```
