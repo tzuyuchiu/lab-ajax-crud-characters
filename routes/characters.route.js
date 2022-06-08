@@ -7,7 +7,7 @@ const Character = require('../models/Character.model')
 /**
  * ? This route should respond with all the characters
  */
-router.get('/', async (req, res, next) => {
+router.get('/', (req, res, next) => {
   /**Your code goes here */
 })
 

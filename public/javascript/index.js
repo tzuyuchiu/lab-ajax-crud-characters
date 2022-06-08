@@ -4,7 +4,7 @@
    */
   const characterTemplate = document.getElementById('template')
 
-  document.getElementById('fetch-all').addEventListener('click', async function (event) {
+  document.getElementById('fetch-all').addEventListener('click', function (event) {
 
   });
 
